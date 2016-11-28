@@ -1,13 +1,9 @@
-.gradle
+.gradle/
+.idea/
+gradlew.bat
 build/
 
-!gradle-wrapper.jar
+lib/
 
-*.class
-
-*.jar
-
-gradlew.bat
 logs
-.idea/
 
