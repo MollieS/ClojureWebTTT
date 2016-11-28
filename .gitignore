@@ -7,5 +7,7 @@ build/
 
 *.jar
 
+gradlew.bat
+logs
 .idea/
 
