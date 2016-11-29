@@ -2,13 +2,10 @@ package tttweb.controllers;
 
 import httpserver.Request;
 import httpserver.Response;
-import httpserver.httprequests.RequestHeader;
-import httpserver.routing.Method;
 import org.junit.Test;
 import tttweb.SessionExpirationDateGenerator;
 import tttweb.SessionTokenGenerator;
 
-import java.net.URI;
 import java.nio.charset.Charset;
 
 import static httpserver.httpresponse.ResponseHeader.COOKIE;
@@ -61,6 +58,15 @@ public class MenuControllerTest {
         assertTrue(cookie.contains("Expires="));
     }
 
+    @Test
+    public void addsBodyToResponse() {
+        Request httpRequest = new RequestDouble("/", GET);
+
+        Response response = menuController.performAction(httpRequest);
+
+        assertTrue(response.hasBody());
+    }
+
     private class SessionTokenGeneratorStub extends SessionTokenGenerator {
 
         @Override
@@ -69,30 +75,4 @@ public class MenuControllerTest {
         }
     }
 
-    private class RequestDouble implements Request {
-
-        private final Method method;
-        private final String url;
-
-        public RequestDouble(String url, Method method) {
-            this.url = url;
-            this.method = method;
-        }
-
-        public boolean hasHeader(RequestHeader requestHeader) {
-            return false;
-        }
-
-        public String getValue(RequestHeader requestHeader) {
-            return null;
-        }
-
-        public Method getMethod() {
-            return method;
-        }
-
-        public URI getRequestURI() {
-            return null;
-        }
-    }
 }
