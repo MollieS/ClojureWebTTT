@@ -2,9 +2,9 @@ package tttweb.controllers;
 
 import httpserver.Request;
 import httpserver.Response;
+import httpserver.sessions.SessionExpirationDateGenerator;
+import httpserver.sessions.SessionTokenGenerator;
 import org.junit.Test;
-import tttweb.SessionExpirationDateGenerator;
-import tttweb.SessionTokenGenerator;
 
 import java.nio.charset.Charset;
 

@@ -6,8 +6,8 @@ import httpserver.httpresponse.HTTPResponse;
 import httpserver.httpresponse.ResponseHeader;
 import httpserver.resourcemanagement.HTMLResource;
 import httpserver.routing.Route;
-import tttweb.SessionExpirationDateGenerator;
-import tttweb.SessionTokenGenerator;
+import httpserver.sessions.SessionExpirationDateGenerator;
+import httpserver.sessions.SessionTokenGenerator;
 
 import java.time.ZonedDateTime;
 import java.util.HashMap;

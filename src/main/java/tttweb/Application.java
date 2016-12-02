@@ -2,9 +2,12 @@ package tttweb;
 
 import httpserver.SocketServer;
 import httpserver.routing.Route;
+import httpserver.routing.Router;
 import httpserver.server.HTTPLogger;
 import httpserver.server.HTTPServer;
 import httpserver.server.HTTPSocketServer;
+import httpserver.sessions.SessionExpirationDateGenerator;
+import httpserver.sessions.SessionTokenGenerator;
 import tttweb.controllers.MenuController;
 
 import java.io.IOException;
@@ -17,7 +20,7 @@ import java.util.concurrent.Executors;
 public class Application {
 
     public static void start() {
-        TTTRouter router = createRouter();
+        Router router = createRouter();
         HTTPLogger logger = new HTTPLogger("./logs");
         ExecutorService executorService = Executors.newFixedThreadPool(40);
         SocketServer socketServer = getSocketServer();
@@ -39,9 +42,9 @@ public class Application {
         return new HTTPSocketServer(serverSocket);
     }
 
-    private static TTTRouter createRouter() {
+    private static Router createRouter() {
         List<Route> routes = new ArrayList();
         routes.add(new MenuController(new SessionTokenGenerator(), new SessionExpirationDateGenerator()));
-        return new TTTRouter(routes);
+        return new Router(routes);
     }
 }
