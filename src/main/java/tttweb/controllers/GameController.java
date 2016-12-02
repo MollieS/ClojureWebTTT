@@ -8,7 +8,10 @@ import httpserver.httpresponse.ResponseHeader;
 import httpserver.resourcemanagement.HTMLResource;
 import httpserver.routing.Route;
 import httpserver.sessions.Session;
+import tttweb.Game;
 import tttweb.SessionManager;
+import tttweb.view.GamePresenter;
+import tttweb.view.GameView;
 
 import java.util.HashMap;
 
@@ -42,8 +45,12 @@ public class GameController extends Route {
     }
 
     private Response validRequest(String sessionId) {
-        String gameType = sessionManager.getOrCreateSession(sessionId).getData().get("gameType");
-        HTMLResource htmlResource = new HTMLResource(gameType.getBytes());
+        Session currentSession = sessionManager.getSession(sessionId);
+        String gameType = currentSession.getData().get("gameType");
+        String[] boardState = currentSession.getData().get("boardState").split("");
+        Game game = new Game(boardState, gameType);
+        String gameView = GameView.createView(new GamePresenter(game));
+        HTMLResource htmlResource = new HTMLResource(gameView.getBytes());
         return HTTPResponse.create(OK).withBody(htmlResource);
     }
 
