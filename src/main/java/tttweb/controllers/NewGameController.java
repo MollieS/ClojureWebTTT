@@ -72,18 +72,14 @@ public class NewGameController extends Route {
         return null;
     }
 
+    private boolean isNewSession(String sessionID) {
+        return getCurrentSession(sessionID) == null;
+    }
+
     private Response redirect(String url) {
         HashMap<ResponseHeader, byte[]> headers = new HashMap<>();
         headers.put(ResponseHeader.LOCATION, url.getBytes());
         return HTTPResponse.create(REDIRECT).withHeaders(headers);
     }
 
-    private boolean isNewSession(String sessionID) {
-        for (Session session : sessions) {
-            if (session.getId().equals(sessionID)) {
-                return false;
-            }
-        }
-        return true;
-    }
 }

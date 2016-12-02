@@ -19,9 +19,7 @@ public class NewGameControllerTest {
 
     @Test
     public void sendsARedirectToGamePageForValidRequest() {
-        RequestDouble requestDouble = new RequestDouble("/new-game", POST);
-        requestDouble.addCookie("1");
-        requestDouble.addData("hvh");
+        RequestDouble requestDouble = getRequestDouble("1", "hvh");
 
         Response response = newGameController.performAction(requestDouble);
 
@@ -31,11 +29,10 @@ public class NewGameControllerTest {
         assertEquals("/game", new String(response.getValue(ResponseHeader.LOCATION), Charset.defaultCharset()));
     }
 
+
     @Test
     public void createsASessionWithCorrectSessionId() {
-        RequestDouble request = new RequestDouble("/new-game", POST);
-        request.addCookie("1");
-        request.addData("hvh");
+        RequestDouble request = getRequestDouble("1", "hvh");
 
         newGameController.performAction(request);
 
@@ -45,8 +42,7 @@ public class NewGameControllerTest {
 
     @Test
     public void ifRequestHasNoCookieItRedirectsToMenuPage() {
-        RequestDouble request = new RequestDouble("/new-game", POST);
-        request.addData("hvh");
+        RequestDouble request = getRequestDouble(null, "hvh");
 
         Response response = newGameController.performAction(request);
 
@@ -58,8 +54,7 @@ public class NewGameControllerTest {
 
     @Test
     public void ifRequestHasNoDataItRedirectsToHomePage() {
-        RequestDouble request = new RequestDouble("/new-game", POST);
-        request.addCookie("1");
+        RequestDouble request = getRequestDouble("1", null);
 
         Response response = newGameController.performAction(request);
 
@@ -71,9 +66,7 @@ public class NewGameControllerTest {
 
     @Test
     public void doesNotCreateSessionIfSessionExists() {
-        RequestDouble request = new RequestDouble("/game", POST);
-        request.addCookie("1");
-        request.addData("hvh");
+        RequestDouble request = getRequestDouble("1", "hvh");
 
         newGameController.performAction(request);
         newGameController.performAction(request);
@@ -83,9 +76,7 @@ public class NewGameControllerTest {
 
     @Test
     public void addsGameTypeToSession() {
-        RequestDouble requestDouble = new RequestDouble("/game", POST);
-        requestDouble.addData("hvh");
-        requestDouble.addCookie("1");
+        RequestDouble requestDouble = getRequestDouble("1", "hvh");
 
         newGameController.performAction(requestDouble);
 
@@ -95,15 +86,20 @@ public class NewGameControllerTest {
 
     @Test
     public void addsBoardStateToSession() {
-        RequestDouble requestDouble = new RequestDouble("/game", POST);
-        requestDouble.addData("hvh");
-        requestDouble.addCookie("1");
+        RequestDouble requestDouble = getRequestDouble("1", "hvh");
 
         newGameController.performAction(requestDouble);
 
         assertTrue(sessionFactorySpy.createdSession.hasData("boardState"));
         assertEquals("---------", sessionFactorySpy.createdSession.getData().get("boardState"));
 
+    }
+
+    private RequestDouble getRequestDouble(String sessionToken, String gamType) {
+        RequestDouble requestDouble = new RequestDouble("/new-game", POST);
+        requestDouble.addCookie(sessionToken);
+        requestDouble.addData(gamType);
+        return requestDouble;
     }
 
     private class SessionFactorySpy implements SessionFactory {
