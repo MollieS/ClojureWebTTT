@@ -6,9 +6,12 @@ import httpserver.routing.Router;
 import httpserver.server.HTTPLogger;
 import httpserver.server.HTTPServer;
 import httpserver.server.HTTPSocketServer;
+import httpserver.sessions.HTTPSessionFactory;
 import httpserver.sessions.SessionExpirationDateGenerator;
 import httpserver.sessions.SessionTokenGenerator;
+import tttweb.controllers.GameController;
 import tttweb.controllers.MenuController;
+import tttweb.controllers.NewGameController;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -45,6 +48,8 @@ public class Application {
     private static Router createRouter() {
         List<Route> routes = new ArrayList();
         routes.add(new MenuController(new SessionTokenGenerator(), new SessionExpirationDateGenerator()));
+        routes.add(new NewGameController(new HTTPSessionFactory()));
+        routes.add(new GameController());
         return new Router(routes);
     }
 }

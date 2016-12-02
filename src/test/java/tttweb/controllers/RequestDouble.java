@@ -11,6 +11,7 @@ class RequestDouble implements Request {
     private final Method method;
     private final String url;
     private String cookie;
+    private String data;
 
     public RequestDouble(String url, Method method) {
         this.url = url;
@@ -18,7 +19,11 @@ class RequestDouble implements Request {
     }
 
     public boolean hasHeader(RequestHeader requestHeader) {
-        return cookie != null;
+        if (requestHeader == RequestHeader.COOKIE) {
+            return cookie != null;
+        } else {
+            return data != null;
+        }
     }
 
     public String getValue(RequestHeader requestHeader) {
@@ -35,5 +40,9 @@ class RequestDouble implements Request {
 
     public void addCookie(String id) {
         this.cookie = id;
+    }
+
+    public void addData(String gameType) {
+        this.data = gameType;
     }
 }
