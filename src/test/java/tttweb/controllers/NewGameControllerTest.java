@@ -6,6 +6,7 @@ import httpserver.sessions.HTTPSession;
 import httpserver.sessions.Session;
 import httpserver.sessions.SessionFactory;
 import org.junit.Test;
+import tttweb.SessionManager;
 
 import java.nio.charset.Charset;
 
@@ -15,7 +16,7 @@ import static org.junit.Assert.*;
 public class NewGameControllerTest {
 
     private SessionFactorySpy sessionFactorySpy = new SessionFactorySpy();
-    private NewGameController newGameController = new NewGameController(sessionFactorySpy);
+    private NewGameController newGameController = new NewGameController(new SessionManager(sessionFactorySpy));
 
     @Test
     public void sendsARedirectToGamePageForValidRequest() {
