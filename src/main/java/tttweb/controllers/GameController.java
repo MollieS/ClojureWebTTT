@@ -27,7 +27,7 @@ public class GameController extends Route {
 
     @Override
     public Response performAction(Request request) {
-        if (!request.hasHeader(RequestHeader.COOKIE)) {
+        if (invalidRequest(request)) {
             return redirect();
         }
         String sessionId = request.getValue(RequestHeader.COOKIE);
@@ -38,9 +38,17 @@ public class GameController extends Route {
         if (isInvalid(currentSession)) {
             return redirect();
         }
-        String gameYpe = sessionManager.getOrCreateSession(sessionId).getData().get("gameType");
-        HTMLResource htmlResource = new HTMLResource(gameYpe.getBytes());
+        return validRequest(sessionId);
+    }
+
+    private Response validRequest(String sessionId) {
+        String gameType = sessionManager.getOrCreateSession(sessionId).getData().get("gameType");
+        HTMLResource htmlResource = new HTMLResource(gameType.getBytes());
         return HTTPResponse.create(OK).withBody(htmlResource);
+    }
+
+    private boolean invalidRequest(Request request) {
+        return !request.hasHeader(RequestHeader.COOKIE);
     }
 
     private boolean isInvalid(Session currentSession) {
