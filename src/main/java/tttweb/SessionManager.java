@@ -15,7 +15,20 @@ public class SessionManager {
         this.sessionFactory = sessionFactory;
     }
 
-    public Session getCurrentSession(String sessionID) {
+    public boolean exists(String sessionID) {
+        return getSession(sessionID) != null;
+    }
+
+    public Session getSession(String sessionID) {
+        for (Session session : sessions) {
+            if (session.getId().equals(sessionID)) {
+                return session;
+            }
+        }
+        return null;
+    }
+
+    public Session getOrCreateSession(String sessionID) {
         if (exists(sessionID)) {
             return getSession(sessionID);
         }
@@ -28,16 +41,4 @@ public class SessionManager {
         return session;
     }
 
-    private Session getSession(String sessionID) {
-        for (Session session : sessions) {
-            if (session.getId().equals(sessionID)) {
-                return session;
-            }
-        }
-        return null;
-    }
-
-    private boolean exists(String sessionID) {
-        return getSession(sessionID) != null;
-    }
 }

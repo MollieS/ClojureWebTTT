@@ -47,9 +47,10 @@ public class Application {
 
     private static Router createRouter() {
         List<Route> routes = new ArrayList();
+        SessionManager sessionManager = new SessionManager(new HTTPSessionFactory());
         routes.add(new MenuController(new SessionTokenGenerator(), new SessionExpirationDateGenerator()));
-        routes.add(new NewGameController(new SessionManager(new HTTPSessionFactory())));
-        routes.add(new GameController());
+        routes.add(new NewGameController(sessionManager));
+        routes.add(new GameController(sessionManager));
         return new Router(routes);
     }
 }

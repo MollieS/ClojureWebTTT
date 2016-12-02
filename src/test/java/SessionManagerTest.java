@@ -4,16 +4,28 @@ import httpserver.sessions.SessionFactory;
 import org.junit.Test;
 import tttweb.SessionManager;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 public class SessionManagerTest {
 
+    private SessionFactorySpy sessionFactorySpy = new SessionFactorySpy();
+    private SessionManager sessionManager = new SessionManager(sessionFactorySpy);
+
+    @Test
+    public void knowsIfSessionDoesNotExists() {
+        assertFalse(sessionManager.exists("1"));
+    }
+
+    @Test
+    public void knowsIfSessionExists() {
+        sessionManager.getOrCreateSession("1");
+
+        assertTrue(sessionManager.exists("1"));
+    }
+
     @Test
     public void createsANewSessionIfOneDoesNotExist() {
-        SessionFactorySpy sessionFactorySpy = new SessionFactorySpy();
-        SessionManager sessionManager = new SessionManager(sessionFactorySpy);
-        Session session = sessionManager.getCurrentSession("1");
+        Session session = sessionManager.getOrCreateSession("1");
 
         assertEquals(1, sessionFactorySpy.timesCalled);
         assertNotNull(session);
@@ -22,10 +34,8 @@ public class SessionManagerTest {
 
     @Test
     public void findsCorrectSessionIfItExists() {
-        SessionFactorySpy sessionFactorySpy = new SessionFactorySpy();
-        SessionManager sessionManager = new SessionManager(sessionFactorySpy);
-        sessionManager.getCurrentSession("1");
-        sessionManager.getCurrentSession("1");
+        sessionManager.getOrCreateSession("1");
+        sessionManager.getOrCreateSession("1");
 
         assertEquals(1, sessionFactorySpy.timesCalled);
     }

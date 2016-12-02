@@ -43,7 +43,7 @@ public class NewGameController extends Route {
     }
 
     private void updateSession(String sessionID, Request request) {
-        Session currentSession = sessionManager.getCurrentSession(sessionID);
+        Session currentSession = sessionManager.getOrCreateSession(sessionID);
         addGameTypeToSession(currentSession, request);
         addBoardStateToSession(currentSession);
     }
