@@ -29,14 +29,47 @@ public class NewGameController extends Route {
 
     @Override
     public Response performAction(Request request) {
-        if (!request.hasHeader(COOKIE) || !request.hasHeader(DATA)) {
+        if (requestIsInvalid(request)) {
             return redirect("/");
         }
+        return createNewGame(request);
+    }
+
+    private Response createNewGame(Request request) {
         String sessionID = request.getValue(COOKIE);
         if (isNewSession(sessionID)) {
             sessions.add(sessionFactory.createSession(sessionID));
         }
+        updateSession(sessionID, request);
         return redirect("/game");
+    }
+
+    private boolean requestIsInvalid(Request request) {
+        return !request.hasHeader(COOKIE) || !request.hasHeader(DATA);
+    }
+
+    private void updateSession(String sessionID, Request request) {
+        Session currentSession = getCurrentSession(sessionID);
+        addGameTypeToSession(currentSession, request);
+        addBoardStateToSession(currentSession);
+    }
+
+    private void addBoardStateToSession(Session currentSession) {
+        currentSession.addData("boardState", "---------");
+    }
+
+    private void addGameTypeToSession(Session currentSession, Request request) {
+        String gameType = request.getValue(DATA);
+        currentSession.addData("gameType", gameType);
+    }
+
+    private Session getCurrentSession(String sessionID) {
+        for (Session session : sessions) {
+            if (session.getId().equals(sessionID)) {
+                return session;
+            }
+        }
+        return null;
     }
 
     private Response redirect(String url) {
@@ -45,7 +78,7 @@ public class NewGameController extends Route {
         return HTTPResponse.create(REDIRECT).withHeaders(headers);
     }
 
-    public boolean isNewSession(String sessionID) {
+    private boolean isNewSession(String sessionID) {
         for (Session session : sessions) {
             if (session.getId().equals(sessionID)) {
                 return false;

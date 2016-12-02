@@ -81,6 +81,31 @@ public class NewGameControllerTest {
         assertEquals(1, sessionFactorySpy.timesCalled);
     }
 
+    @Test
+    public void addsGameTypeToSession() {
+        RequestDouble requestDouble = new RequestDouble("/game", POST);
+        requestDouble.addData("hvh");
+        requestDouble.addCookie("1");
+
+        newGameController.performAction(requestDouble);
+
+        assertTrue(sessionFactorySpy.createdSession.hasData("gameType"));
+        assertEquals("hvh", sessionFactorySpy.createdSession.getData().get("gameType"));
+    }
+
+    @Test
+    public void addsBoardStateToSession() {
+        RequestDouble requestDouble = new RequestDouble("/game", POST);
+        requestDouble.addData("hvh");
+        requestDouble.addCookie("1");
+
+        newGameController.performAction(requestDouble);
+
+        assertTrue(sessionFactorySpy.createdSession.hasData("boardState"));
+        assertEquals("---------", sessionFactorySpy.createdSession.getData().get("boardState"));
+
+    }
+
     private class SessionFactorySpy implements SessionFactory {
 
         public HTTPSession createdSession;

@@ -27,7 +27,11 @@ class RequestDouble implements Request {
     }
 
     public String getValue(RequestHeader requestHeader) {
-        return cookie;
+        if (requestHeader == RequestHeader.COOKIE) {
+            return cookie;
+        } else {
+            return data;
+        }
     }
 
     public Method getMethod() {
