@@ -62,7 +62,7 @@ public class GameView {
     private static String addBoard(GamePresenter gamePresenter) {
         String body = "<body>" +
                 "<div class=\"board\">" +
-                "<form method=\"post\" action=\"/new-move\">";
+                "<form method=\"post\" action=\"/update-board\">";
         body += createBoard(gamePresenter, body);
         body += "</form>" +
                 "</div>";
