@@ -4,10 +4,10 @@ import httpserver.Response;
 import httpserver.sessions.HTTPSession;
 import httpserver.sessions.HTTPSessionFactory;
 import httpserver.sessions.Session;
+import httpserver.sessions.SessionManager;
 import org.junit.Before;
 import org.junit.Test;
 import tttweb.doubles.RequestDouble;
-import tttweb.SessionManager;
 
 import java.nio.charset.Charset;
 

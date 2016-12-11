@@ -2,7 +2,7 @@ package tttweb.doubles;
 
 import httpserver.sessions.HTTPSession;
 import httpserver.sessions.Session;
-import tttweb.SessionManager;
+import httpserver.sessions.SessionManager;
 
 public class SessionManagerStub extends SessionManager {
 

@@ -8,8 +8,8 @@ import httpserver.httpresponse.ResponseHeader;
 import httpserver.httpresponse.StatusCode;
 import httpserver.routing.Route;
 import httpserver.sessions.Session;
+import httpserver.sessions.SessionManager;
 import tttweb.Game;
-import tttweb.SessionManager;
 
 import java.util.HashMap;
 

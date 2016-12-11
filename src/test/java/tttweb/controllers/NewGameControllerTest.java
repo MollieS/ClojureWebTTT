@@ -2,10 +2,10 @@ package tttweb.controllers;
 
 import httpserver.Response;
 import httpserver.httpresponse.ResponseHeader;
+import httpserver.sessions.SessionManager;
 import org.junit.Test;
 import tttweb.doubles.RequestDouble;
 import tttweb.doubles.SessionFactorySpy;
-import tttweb.SessionManager;
 
 import java.nio.charset.Charset;
 

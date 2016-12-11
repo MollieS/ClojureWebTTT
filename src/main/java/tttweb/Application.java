@@ -8,6 +8,7 @@ import httpserver.server.HTTPServer;
 import httpserver.server.HTTPSocketServer;
 import httpserver.sessions.HTTPSessionFactory;
 import httpserver.sessions.SessionExpirationDateGenerator;
+import httpserver.sessions.SessionManager;
 import httpserver.sessions.SessionTokenGenerator;
 import tttweb.controllers.GameController;
 import tttweb.controllers.MenuController;

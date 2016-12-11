@@ -6,7 +6,7 @@ import httpserver.httpresponse.HTTPResponse;
 import httpserver.httpresponse.ResponseHeader;
 import httpserver.routing.Route;
 import httpserver.sessions.Session;
-import tttweb.SessionManager;
+import httpserver.sessions.SessionManager;
 
 import java.util.HashMap;
 
@@ -39,8 +39,6 @@ public class NewGameController extends Route {
     }
 
     private boolean requestIsInvalid(Request request) {
-//        System.out.println(request.hasHeader(COOKIE));
-//        System.out.println(request.hasHeader(DATA));
         return !request.hasHeader(COOKIE) || !request.hasHeader(DATA);
     }
 

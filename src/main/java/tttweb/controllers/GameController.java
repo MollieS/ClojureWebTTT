@@ -8,8 +8,8 @@ import httpserver.httpresponse.ResponseHeader;
 import httpserver.resourcemanagement.HTMLResource;
 import httpserver.routing.Route;
 import httpserver.sessions.Session;
+import httpserver.sessions.SessionManager;
 import tttweb.Game;
-import tttweb.SessionManager;
 import tttweb.view.GamePresenter;
 import tttweb.view.GameView;
 
