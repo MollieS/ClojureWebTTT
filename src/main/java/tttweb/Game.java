@@ -4,6 +4,7 @@ import clojure.java.api.Clojure;
 import clojure.lang.IFn;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Game {
@@ -20,6 +21,7 @@ public class Game {
         IFn require = Clojure.var("clojure.core", "require");
         require.invoke(Clojure.read("tic-tac-toe.game.rules"));
         require.invoke(Clojure.read("tic-tac-toe.game.board"));
+        require.invoke(Clojure.read("tic-tac-toe.game.marks"));
         this.getWinningPositions = Clojure.var("tic-tac-toe.game.board", "get-winning-positions");
     }
 
@@ -59,8 +61,23 @@ public class Game {
     }
 
     public String[] placeMark(int i) {
-        board[i] = MARK_ONE;
+        if (board[i].equals("-")) {
+            board[i] = getCurrentMark(board);
+        }
         return board;
     }
 
+    public String getCurrentMark(String[] board) {
+        IFn getCurrentMark = Clojure.var("tic-tac-toe.game.marks", "get-current-mark");
+        String currentMark = (String) getCurrentMark.invoke(isPlayerOne(board));
+        return currentMark.toLowerCase();
+    }
+
+    private boolean isPlayerOne(String[] board) {
+        return countMarks(board) % 2 == 0;
+    }
+
+    private int countMarks(String[] board) {
+        return (int) Arrays.stream(board).filter(cell -> !cell.equals("-")).count();
+    }
 }

@@ -1,5 +1,6 @@
+package tttweb;
+
 import org.junit.Test;
-import tttweb.Game;
 
 import static org.junit.Assert.*;
 
@@ -50,4 +51,25 @@ public class GameTest {
 
         assertEquals("x", markedBoard[0]);
     }
+
+    @Test
+    public void placesTheCorrectMark() {
+        String[] board = {"x", "-", "-", "-", "-", "-", "-", "-", "-"};
+
+        Game game = new Game(board, "hvh");
+        String[] markedBoard = game.placeMark(4);
+
+        assertEquals("o", markedBoard[4]);
+    }
+
+    @Test
+    public void doesNotPlaceAMarkInCellIfTaken() {
+        String[] board = {"x", "-", "-", "-", "-", "-", "-", "-", "-"};
+
+        Game game = new Game(board, "hvh");
+        String[] markedBoard = game.placeMark(0);
+
+        assertEquals("x", markedBoard[0]);
+    }
 }
+

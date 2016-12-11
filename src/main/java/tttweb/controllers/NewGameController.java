@@ -39,6 +39,8 @@ public class NewGameController extends Route {
     }
 
     private boolean requestIsInvalid(Request request) {
+//        System.out.println(request.hasHeader(COOKIE));
+//        System.out.println(request.hasHeader(DATA));
         return !request.hasHeader(COOKIE) || !request.hasHeader(DATA);
     }
 

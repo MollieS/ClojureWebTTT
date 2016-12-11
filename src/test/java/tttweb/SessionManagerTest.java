@@ -1,8 +1,8 @@
-import httpserver.sessions.HTTPSession;
+package tttweb;
+
 import httpserver.sessions.Session;
-import httpserver.sessions.SessionFactory;
 import org.junit.Test;
-import tttweb.SessionManager;
+import tttweb.doubles.SessionFactorySpy;
 
 import static org.junit.Assert.*;
 
@@ -38,18 +38,5 @@ public class SessionManagerTest {
         sessionManager.getOrCreateSession("1");
 
         assertEquals(1, sessionFactorySpy.timesCalled);
-    }
-
-    private class SessionFactorySpy implements SessionFactory {
-
-        public HTTPSession createdSession;
-        public int timesCalled = 0;
-
-        @Override
-        public Session createSession(String id) {
-            timesCalled++;
-            createdSession = new HTTPSession(id);
-            return createdSession;
-        }
     }
 }

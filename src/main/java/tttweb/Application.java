@@ -12,6 +12,7 @@ import httpserver.sessions.SessionTokenGenerator;
 import tttweb.controllers.GameController;
 import tttweb.controllers.MenuController;
 import tttweb.controllers.NewGameController;
+import tttweb.controllers.UpdateBoardController;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -51,6 +52,7 @@ public class Application {
         routes.add(new MenuController(new SessionTokenGenerator(), new SessionExpirationDateGenerator()));
         routes.add(new NewGameController(sessionManager));
         routes.add(new GameController(sessionManager));
+        routes.add(new UpdateBoardController(sessionManager));
         return new Router(routes);
     }
 }

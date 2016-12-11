@@ -34,13 +34,13 @@
 
 <div class="menu">
     <form method="post" action="/new-game">
-        <button class="button" type="submit" id="hvh" name="data" value="hvh">Human v Human</button>
+        <button class="button" type="submit" name="data" value="hvh">Human v Human</button>
         <br>
-        <button class="button" type="submit" id="hvc" name="data" value="hvc">Human v Computer</button>
+        <button class="button" type="submit" name="data" value="hvc">Human v Computer</button>
         <br>
-        <button class="button" type="submit" id="cvh" name="data" value="cvh">Computer v Human</button>
+        <button class="button" type="submit" name="data" value="cvh">Computer v Human</button>
         <br>
-        <button class="button" type="submit" id="cvc" name="data" value="cvc">Computer v Computer</button>
+        <button class="button" type="submit" name="data" value="cvc">Computer v Computer</button>
         <br>
     </form>
 </div>
