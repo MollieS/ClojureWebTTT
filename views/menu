@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TicTacToe</title>
+    <style media="screen" type="text/css">
+        .title {
+            text-align: center;
+        }
+        .subtitle {
+            text-align: center;
+        }
+        .menu {
+            margin: auto;
+            width: 10%;
+            padding: 10px;
+        }
+        .button {
+            margin: auto;
+            width: 100%;
+            font-size: 18;
+            text-align: center;
+            padding: 10px;
+        }
+
+    </style>
+</head>
+<body>
+
+
+<h1 class="title">Welcome to Tic Tac Toe</h1>
+
+<h3 class="subtitle">Please choose your game:</h3>
+
+<div class="menu">
+    <form method="post" action="/new-game">
+        <button class="button" type="submit" id="hvh" name="data" value="hvh">Human v Human</button>
+        <br>
+        <button class="button" type="submit" id="hvc" name="data" value="hvc">Human v Computer</button>
+        <br>
+        <button class="button" type="submit" id="cvh" name="data" value="cvh">Computer v Human</button>
+        <br>
+        <button class="button" type="submit" id="cvc" name="data" value="cvc">Computer v Computer</button>
+        <br>
+    </form>
+</div>
+</body>
+</html>
