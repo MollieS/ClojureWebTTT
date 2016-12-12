@@ -71,5 +71,16 @@ public class GameTest {
 
         assertEquals("x", markedBoard[0]);
     }
+
+    @Test
+    public void placesAComputerMoveInAHumanVComputerGame() {
+        String[] board = {"-", "-", "-", "-", "-", "-", "-", "-", "-"};
+
+        Game game = new Game(board, "hvc");
+
+        String[] markedBoard = game.placeMark(4);
+
+        assertEquals("o", markedBoard[0]);
+    }
 }
 

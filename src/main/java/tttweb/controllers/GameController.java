@@ -48,10 +48,18 @@ public class GameController extends Route {
         Session currentSession = sessionManager.getSession(sessionId);
         String gameType = currentSession.getData().get("gameType");
         String[] boardState = currentSession.getData().get("boardState").split("");
+        if (currentPlayer(gameType).equals("c")) {
+            boardState[0] = "x";
+            currentSession.addData("boardState", "x--------");
+        }
         Game game = new Game(boardState, gameType);
         String gameView = GameView.createView(new GamePresenter(game));
         HTMLResource htmlResource = new HTMLResource(gameView.getBytes());
         return HTTPResponse.create(OK).withBody(htmlResource);
+    }
+
+    private String currentPlayer(String gameType) {
+        return gameType.split("")[0];
     }
 
     private boolean invalidRequest(Request request) {

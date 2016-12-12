@@ -80,7 +80,6 @@ public class UpdateBoardControllerTest {
 
     @Test
     public void redirectToMenuIfRequestHasNoCookieData() {
-        RequestDouble requestDouble = new RequestDouble("/update-board", POST);
         requestDouble.addData("4");
 
         Response response = updateBoardController.performAction(requestDouble);
@@ -103,6 +102,17 @@ public class UpdateBoardControllerTest {
         assertEquals(302, response.getStatusCode());
         assertTrue(response.hasHeader(LOCATION));
         assertEquals("/game", new String(response.getValue(LOCATION), Charset.defaultCharset()));
+    }
+
+    @Test
+    public void playsAComputerMoveWhenHumanVComputerGame() {
+        session.addData("gameType", "hvc");
+        session.addData("boardState", "---------");
+        requestDouble.addData("4");
+
+        updateBoardController.performAction(requestDouble);
+
+        assertEquals("o---x----", session.getData().get("boardState"));
     }
 
     private class SessionManagerStub extends SessionManager {

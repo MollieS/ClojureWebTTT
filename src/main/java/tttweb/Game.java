@@ -9,8 +9,8 @@ import java.util.List;
 
 public class Game {
 
-    private static String MARK_ONE = "x";
-    private static String MARK_TWO = "o";
+    private static String MARK_ONE = "X";
+    private static String MARK_TWO = "O";
     private final String gameType;
     private String[] board;
     private IFn getWinningPositions;
@@ -22,6 +22,7 @@ public class Game {
         require.invoke(Clojure.read("tic-tac-toe.game.rules"));
         require.invoke(Clojure.read("tic-tac-toe.game.board"));
         require.invoke(Clojure.read("tic-tac-toe.game.marks"));
+        require.invoke(Clojure.read("tic-tac-toe.players.unbeatable-player"));
         this.getWinningPositions = Clojure.var("tic-tac-toe.game.board", "get-winning-positions");
     }
 
@@ -36,7 +37,7 @@ public class Game {
             if (cell.equals("-")) {
                 formattedBoard.add(null);
             } else {
-                formattedBoard.add(cell);
+                formattedBoard.add(cell.toUpperCase());
             }
         }
         return formattedBoard;
@@ -57,14 +58,24 @@ public class Game {
 
     public String winningSymbol() {
         IFn winningSymbol = Clojure.var("tic-tac-toe.game.rules", "get-winner");
-        return (String) winningSymbol.invoke(getWinningPositions.invoke(board), MARK_ONE, MARK_TWO);
+        return (String) winningSymbol.invoke(getWinningPositions.invoke(formatBoard()), MARK_ONE, MARK_TWO);
     }
 
     public String[] placeMark(int i) {
         if (board[i].equals("-")) {
             board[i] = getCurrentMark(board);
         }
+        playComputerMove();
         return board;
+    }
+
+    private void playComputerMove() {
+        if (gameType.contains("c") && !isOver()) {
+            IFn getComputerMove = Clojure.var("tic-tac-toe.players.unbeatable-player", "get-computer-move");
+            String[] marks = new String[]{"X", "O"};
+            Long computerMove = (long) getComputerMove.invoke(formatBoard(), marks);
+            board[computerMove.intValue()] = getCurrentMark(board);
+        }
     }
 
     public String getCurrentMark(String[] board) {

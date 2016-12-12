@@ -2,6 +2,7 @@ package tttweb.controllers;
 
 import httpserver.Response;
 import httpserver.httpresponse.ResponseHeader;
+import httpserver.sessions.Session;
 import httpserver.sessions.SessionManager;
 import org.junit.Test;
 import tttweb.doubles.RequestDouble;
@@ -67,5 +68,19 @@ public class GameControllerTest {
         assertEquals(200, reponse.getStatusCode());
         assertEquals("OK", reponse.getReasonPhrase());
         assertTrue(reponse.hasBody());
+    }
+
+    @Test
+    public void playsAComputerMoveIfComputerIsFirst() {
+        RequestDouble requestDouble = new RequestDouble("/game", GET);
+        requestDouble.addCookie("1");
+        Session session = sessionManager.getSession("1");
+        session.addData("gameType", "cvh");
+        session.addData("boardState", "---------");
+
+        Response response = gameController.performAction(requestDouble);
+
+        assertEquals(200, response.getStatusCode());
+        assertEquals("x--------", session.getData().get("boardState"));
     }
 }
