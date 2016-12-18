@@ -67,7 +67,8 @@ public class UpdateBoardControllerTest {
     }
 
     @Test
-    public void redirectIfRequestHasNoMoveData() {
+    public void redirectIfRequestHasNoMoveDataInAHumanGame() {
+        session.addData("gameType", "hvh");
         session.addData("boardState", "---------");
 
         Response response = updateBoardController.performAction(requestDouble);
@@ -80,7 +81,8 @@ public class UpdateBoardControllerTest {
 
     @Test
     public void redirectToMenuIfRequestHasNoCookieData() {
-        requestDouble.addData("4");
+        requestDouble = new RequestDouble("/update-board", POST);
+        requestDouble.addData("6");
 
         Response response = updateBoardController.performAction(requestDouble);
 
@@ -113,6 +115,27 @@ public class UpdateBoardControllerTest {
         updateBoardController.performAction(requestDouble);
 
         assertEquals("o---x----", session.getData().get("boardState"));
+    }
+
+    @Test
+    public void playsAComputerMoveWhenComputerVHumanGame() {
+        session.addData("gameType", "cvh");
+        session.addData("boardState", "x--------");
+        requestDouble.addData("4");
+
+        updateBoardController.performAction(requestDouble);
+
+        assertEquals("xx--o----", session.getData().get("boardState"));
+    }
+
+    @Test
+    public void playsAMoveInComputerVComputerGame() {
+        session.addData("gameType", "cvc");
+        session.addData("boardState", "x--------");
+
+        Response response = updateBoardController.performAction(requestDouble);
+
+        assertEquals("x---o----", session.getData().get("boardState"));
     }
 
     private class SessionManagerStub extends SessionManager {

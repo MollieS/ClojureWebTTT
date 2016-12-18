@@ -20,18 +20,14 @@ public class GamePresenter {
 
     public String getMark(int i) {
         String[] boardArray = game.getBoard();
-        if (boardArray[i].equals("-")) {
-            return "-";
-        }
         return boardArray[i].toLowerCase();
     }
 
     public String getResult() {
         if (game.isOver() && !game.isDraw()) {
             return (game.winningSymbol() + " wins!");
-        } else if (game.isDraw()) {
+        } else {
             return "It's a draw!";
         }
-        return "";
     }
 }

@@ -48,7 +48,7 @@ public class GameController extends Route {
         Session currentSession = sessionManager.getSession(sessionId);
         String gameType = currentSession.getData().get("gameType");
         String[] boardState = currentSession.getData().get("boardState").split("");
-        if (currentPlayer(gameType).equals("c")) {
+        if (currentPlayer(gameType).equals("c") && isFirstTurn(boardState)) {
             boardState[0] = "x";
             currentSession.addData("boardState", "x--------");
         }
@@ -56,6 +56,15 @@ public class GameController extends Route {
         String gameView = GameView.createView(new GamePresenter(game));
         HTMLResource htmlResource = new HTMLResource(gameView.getBytes());
         return HTTPResponse.create(OK).withBody(htmlResource);
+    }
+
+    private boolean isFirstTurn(String[] boardState) {
+        for (String cell : boardState) {
+            if (!cell.equals("-")) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private String currentPlayer(String gameType) {

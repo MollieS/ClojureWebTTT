@@ -61,8 +61,8 @@ public class Game {
         return (String) winningSymbol.invoke(getWinningPositions.invoke(formatBoard()), MARK_ONE, MARK_TWO);
     }
 
-    public String[] placeMark(int i) {
-        if (board[i].equals("-")) {
+    public String[] placeMark(Integer i) {
+        if (i != null && board[i].equals("-")) {
             board[i] = getCurrentMark(board);
         }
         playComputerMove();

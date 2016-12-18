@@ -39,7 +39,12 @@ public class UpdateBoardController extends Route {
 
     private Response responseForValidRequest(Request request, String sessionId) {
         if (isValid(request, sessionId)) {
-            Integer move = Integer.valueOf(request.getValue(DATA));
+            Integer move;
+            if (sessionManager.getSession(sessionId).getData().get("gameType").contains("h")) {
+                move = Integer.valueOf(request.getValue(DATA));
+            } else {
+                move = null;
+            }
             Session currentSession = getCurrentSession(sessionId);
             Game game = getGame(currentSession);
             String updatedBoard = convertBoardToString(game.placeMark(move));
@@ -49,7 +54,14 @@ public class UpdateBoardController extends Route {
     }
 
     private boolean isValid(Request request, String sessionId) {
-        return request.hasHeader(DATA) && sessionManager.exists(sessionId);
+        return sessionManager.exists(sessionId) && isValidMove(request, sessionId);
+    }
+
+    private boolean isValidMove(Request request, String sessionId) {
+        if (sessionManager.getSession(sessionId).getData().get("gameType").contains("h")) {
+            return request.hasHeader(DATA);
+        }
+        return true;
     }
 
     private Game getGame(Session currentSession) {

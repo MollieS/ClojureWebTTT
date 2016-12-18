@@ -39,7 +39,7 @@ public class GameTest {
 
         Game game = new Game(board, "hvh");
 
-        assertEquals("x", game.winningSymbol());
+        assertEquals("X", game.winningSymbol());
     }
 
     @Test
