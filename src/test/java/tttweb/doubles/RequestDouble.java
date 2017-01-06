@@ -1,4 +1,4 @@
-package tttweb.controllers;
+package tttweb.doubles;
 
 import httpserver.Request;
 import httpserver.httprequests.RequestHeader;
@@ -6,7 +6,7 @@ import httpserver.routing.Method;
 
 import java.net.URI;
 
-class RequestDouble implements Request {
+public class RequestDouble implements Request {
 
     private final Method method;
     private final String url;

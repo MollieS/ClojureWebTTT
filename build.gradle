@@ -19,6 +19,8 @@ repositories {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
     compile name: 'Server-2.0'
+    compile name: 'tic-tac-toe-0.2.0'
+    compile name: 'clojure-1.8.0'
 }
 
 

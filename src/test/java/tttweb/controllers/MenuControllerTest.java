@@ -5,6 +5,7 @@ import httpserver.Response;
 import httpserver.sessions.SessionExpirationDateGenerator;
 import httpserver.sessions.SessionTokenGenerator;
 import org.junit.Test;
+import tttweb.doubles.RequestDouble;
 
 import java.nio.charset.Charset;
 

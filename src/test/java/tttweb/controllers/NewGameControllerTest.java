@@ -2,10 +2,10 @@ package tttweb.controllers;
 
 import httpserver.Response;
 import httpserver.httpresponse.ResponseHeader;
-import httpserver.sessions.HTTPSession;
-import httpserver.sessions.Session;
-import httpserver.sessions.SessionFactory;
+import httpserver.sessions.SessionManager;
 import org.junit.Test;
+import tttweb.doubles.RequestDouble;
+import tttweb.doubles.SessionFactorySpy;
 
 import java.nio.charset.Charset;
 
@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
 public class NewGameControllerTest {
 
     private SessionFactorySpy sessionFactorySpy = new SessionFactorySpy();
-    private NewGameController newGameController = new NewGameController(sessionFactorySpy);
+    private NewGameController newGameController = new NewGameController(new SessionManager(sessionFactorySpy));
 
     @Test
     public void sendsARedirectToGamePageForValidRequest() {
@@ -102,16 +102,4 @@ public class NewGameControllerTest {
         return requestDouble;
     }
 
-    private class SessionFactorySpy implements SessionFactory {
-
-        public HTTPSession createdSession;
-        public int timesCalled = 0;
-
-        @Override
-        public Session createSession(String id) {
-            timesCalled++;
-            createdSession = new HTTPSession(id);
-            return createdSession;
-        }
-    }
 }
