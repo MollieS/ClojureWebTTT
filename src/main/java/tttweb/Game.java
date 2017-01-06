@@ -31,7 +31,7 @@ public class Game {
         return (boolean) isOver.invoke(getWinningPositions.invoke(formatBoard()), MARK_ONE, MARK_TWO);
     }
 
-    private List<String> formatBoard() {
+    public List<String> formatBoard() {
         List<String> formattedBoard = new ArrayList<>();
         for (String cell : board) {
             if (cell.equals("-")) {

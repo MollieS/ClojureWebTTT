@@ -53,6 +53,12 @@ public class GameController extends Route {
             currentSession.addData("boardState", "x--------");
         }
         Game game = new Game(boardState, gameType);
+        if (gameType.equals("cvc")) {
+            boardState = game.placeMark(null);
+            System.out.println(boardState);
+            game = new Game(boardState, gameType);
+            System.out.println("HELLO");
+        }
         String gameView = GameView.createView(new GamePresenter(game));
         HTMLResource htmlResource = new HTMLResource(gameView.getBytes());
         return HTTPResponse.create(OK).withBody(htmlResource);

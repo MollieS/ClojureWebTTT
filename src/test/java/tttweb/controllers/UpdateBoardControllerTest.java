@@ -133,7 +133,7 @@ public class UpdateBoardControllerTest {
         session.addData("gameType", "cvc");
         session.addData("boardState", "x--------");
 
-        Response response = updateBoardController.performAction(requestDouble);
+        updateBoardController.performAction(requestDouble);
 
         assertEquals("x---o----", session.getData().get("boardState"));
     }

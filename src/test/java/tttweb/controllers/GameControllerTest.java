@@ -83,4 +83,17 @@ public class GameControllerTest {
         assertEquals(200, response.getStatusCode());
         assertEquals("x--------", session.getData().get("boardState"));
     }
+
+    @Test
+    public void playsAComputerMoveIfComputerVComputerGame() {
+        RequestDouble requestDouble = new RequestDouble("/game", GET);
+        requestDouble.addCookie("1");
+        Session session = sessionManager.getSession("1");
+        session.addData("gameType", "cvh");
+        session.addData("boardState", "x---o----");
+
+        Response response = gameController.performAction(requestDouble);
+
+        assertEquals(200, response.getStatusCode());
+    }
 }
